@@ -1,22 +1,490 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio - Shobhit Bhatnagar</title>
-    <script type="module" crossorigin src="/assets/index-D32tbdQ4.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BJh4kQ3O.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6G9Z9BRE22"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6G9Z9BRE22');
-  </script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shobhit Bhatnagar — Staff Backend Engineer</title>
+<meta name="description" content="Shobhit Bhatnagar — Staff Backend Engineer building cloud-native platforms, notification systems, and developer tools.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#090c12;
+    --surface:#11151f;
+    --surface-2:#171c2a;
+    --surface-3:#1e2436;
+    --text:#e7eaf2;
+    --muted:#8891a6;
+    --dim:#59627a;
+    --violet:#7c5cff;
+    --violet-dim:#7c5cff33;
+    --mint:#34d399;
+    --coral:#ff6b5b;
+    --amber:#f2c14e;
+    --border:#232838;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --sans:'Inter', -apple-system, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background-image:
+      radial-gradient(circle at 15% 8%, #7c5cff14 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, #34d39910 0%, transparent 40%);
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--violet);color:#fff;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:#090c12cc;
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .navbar{
+    max-width:1080px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;justify-content:space-between;
+    height:52px;
+  }
+  .brand{font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.02em;color:var(--text);}
+  .brand span{color:var(--mint);}
+  .tabs{display:flex;gap:2px;font-family:var(--mono);font-size:12.5px;}
+  .tabs a{
+    padding:8px 12px;color:var(--muted);border-radius:6px 6px 0 0;
+    border-bottom:2px solid transparent;transition:.15s;
+  }
+  .tabs a:hover{color:var(--text);background:var(--surface);}
+  .tabs a.active{color:var(--violet);border-bottom-color:var(--violet);}
+  @media (max-width:720px){ .tabs{display:none;} }
+
+  /* ---------- HERO / TERMINAL ---------- */
+  .hero{padding:64px 0 40px;}
+  .term{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 30px 80px -30px #000000aa, 0 0 0 1px #ffffff05 inset;
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--border);
+    font-family:var(--mono);font-size:12px;color:var(--dim);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--surface-3);}
+  .term-title{margin-left:8px;}
+  .term-body{padding:26px 24px 30px;font-family:var(--mono);font-size:14.5px;min-height:250px;}
+  .term-line{color:var(--muted);}
+  .term-line .prompt{color:var(--mint);}
+  .term-line .cmd{color:var(--text);}
+  .out{color:var(--text);white-space:pre-wrap;}
+  .cursor{display:inline-block;width:8px;height:16px;background:var(--violet);vertical-align:text-bottom;animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .hero-name{
+    font-family:var(--mono);font-weight:800;
+    font-size:clamp(28px,5vw,46px);
+    letter-spacing:-.01em;
+    margin:14px 0 4px;
+    background:linear-gradient(90deg,#fff, #b9aeff 60%, var(--mint));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-role{color:var(--muted);font-size:16px;margin-bottom:16px;}
+  .hero-role b{color:var(--text);font-weight:600;}
+  .badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .badge{
+    font-family:var(--mono);font-size:11.5px;color:var(--mint);
+    background:#34d39914;border:1px solid #34d39933;
+    padding:4px 9px;border-radius:20px;display:flex;align-items:center;gap:6px;
+  }
+  .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 6px var(--mint);}
+  .cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+  .btn{
+    font-family:var(--mono);font-size:13px;padding:10px 16px;border-radius:7px;
+    border:1px solid var(--border);transition:.15s;
+  }
+  .btn.primary{background:var(--violet);color:#fff;border-color:var(--violet);}
+  .btn.primary:hover{background:#6b4bf0;}
+  .btn.ghost{color:var(--text);}
+  .btn.ghost:hover{border-color:var(--muted);background:var(--surface);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0;border-top:1px solid var(--border);}
+  .sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:32px;}
+  .sec-tag{font-family:var(--mono);font-size:12px;color:var(--dim);}
+  .sec-title{font-family:var(--mono);font-weight:700;font-size:22px;color:var(--text);}
+  .sec-title .accent{color:var(--violet);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;}
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{color:var(--muted);margin-bottom:14px;font-size:15px;}
+  .about-text strong{color:var(--text);}
+  .fetch{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:20px 22px;font-family:var(--mono);font-size:13px;
+  }
+  .fetch-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);}
+  .fetch-row:last-child{border-bottom:none;}
+  .fetch-row .k{color:var(--dim);}
+  .fetch-row .v{color:var(--text);text-align:right;}
+  .fetch-row .v.mint{color:var(--mint);}
+
+  /* ---------- EXPERIENCE (git log) ---------- */
+  .commits{position:relative;}
+  .commits::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--border);}
+  .commit{position:relative;padding:0 0 30px 32px;}
+  .commit:last-child{padding-bottom:0;}
+  .commit::before{
+    content:'';position:absolute;left:0;top:5px;width:13px;height:13px;border-radius:50%;
+    background:var(--void);border:2px solid var(--violet);
+  }
+  .commit.head::before{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint);}
+  .commit-meta{font-family:var(--mono);font-size:12px;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+  .commit-hash{color:var(--violet);}
+  .commit-tag{background:var(--surface-2);border:1px solid var(--border);padding:1px 7px;border-radius:4px;color:var(--mint);}
+  .commit-msg{font-weight:600;font-size:15.5px;color:var(--text);margin-bottom:6px;}
+  .commit-body{color:var(--muted);font-size:14px;}
+  .commit-body ul{margin:6px 0 0 18px;}
+  .commit-body li{margin-bottom:3px;}
+
+  /* ---------- PROJECTS (repo cards) ---------- */
+  .repo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media (max-width:720px){ .repo-grid{grid-template-columns:1fr;} }
+  .repo-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:20px;transition:.18s;display:flex;flex-direction:column;height:100%;
+  }
+  .repo-card:hover{border-color:var(--violet);transform:translateY(-2px);}
+  .repo-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .repo-name{font-family:var(--mono);font-weight:700;font-size:15px;color:var(--violet);}
+  .repo-badge{font-family:var(--mono);font-size:10px;color:var(--amber);background:#f2c14e14;border:1px solid #f2c14e33;padding:2px 6px;border-radius:4px;}
+  .repo-desc{color:var(--muted);font-size:13.5px;flex-grow:1;margin-bottom:14px;}
+  .repo-foot{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--dim);}
+  .lang{display:flex;align-items:center;gap:6px;}
+  .lang-dot{width:8px;height:8px;border-radius:50%;}
+
+  /* ---------- TOOLKIT CALLOUT ---------- */
+  .callout{
+    background:linear-gradient(135deg,#7c5cff14,#34d39910);
+    border:1px solid var(--border);border-radius:12px;padding:26px 28px;
+    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .callout h3{font-family:var(--mono);font-size:17px;margin-bottom:6px;}
+  .callout p{color:var(--muted);font-size:13.5px;max-width:520px;}
+
+  /* ---------- SKILLS ---------- */
+  .skill-group{margin-bottom:18px;}
+  .skill-label{font-family:var(--mono);font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+  .pill-row{display:flex;flex-wrap:wrap;gap:7px;}
+  .pill{font-family:var(--mono);font-size:12.5px;color:var(--text);background:var(--surface);border:1px solid var(--border);padding:5px 10px;border-radius:6px;}
+
+  /* ---------- WRITING ---------- */
+  .ls-header{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+  .post{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:14px 0;border-bottom:1px solid var(--border);
+  }
+  .post:hover .post-title{color:var(--violet);}
+  .post-title{font-size:14.5px;font-weight:600;transition:.15s;}
+  .post-tags{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:3px;}
+  .post-date{font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-term{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:26px 28px;
+    font-family:var(--mono);font-size:14px;
+  }
+  .contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}
+  .contact-links a{
+    font-family:var(--mono);font-size:13px;color:var(--text);
+    border:1px solid var(--border);padding:9px 14px;border-radius:7px;transition:.15s;
+  }
+  .contact-links a:hover{border-color:var(--mint);color:var(--mint);}
+
+  footer{padding:28px 0 40px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--dim);}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navbar">
+    <div class="brand">shobhit<span>@</span>t2b</div>
+    <div class="tabs">
+      <a href="#about" class="active">~/about</a>
+      <a href="#experience">~/experience</a>
+      <a href="#projects">~/projects</a>
+      <a href="#writing">~/writing</a>
+      <a href="#contact">~/contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="term">
+      <div class="term-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="term-title">shobhit — zsh — 80x24</span>
+      </div>
+      <div class="term-body" id="termBody">
+        <div class="term-line"><span class="prompt">shobhit@t2b</span><span>:~$ </span><span class="cmd" id="typedCmd"></span><span class="cursor" id="cursor"></span></div>
+        <div id="termOut" style="display:none;">
+          <div class="out">loading identity...</div>
+          <h1 class="hero-name">Shobhit Bhatnagar</h1>
+          <div class="hero-role">Staff Backend Engineer @ <b>Thoughts2Binary</b> — cloud-native platforms, event-driven systems, and things that go <b>ping</b> at 3am so you don't have to.</div>
+          <div class="badge-row">
+            <span class="badge">8+ yrs shipping production systems</span>
+            <span class="badge">Python · Go · Rust</span>
+            <span class="badge">building Notifex</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn primary" href="#projects">./view-projects</a>
+            <a class="btn ghost" href="https://github.com/ticatwolves" target="_blank" rel="noopener">github.com/ticatwolves</a>
+            <a class="btn ghost" href="#contact">get-in-touch</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-tag">01</span><span class="sec-title">cat <span class="accent">about.md</span></span></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>Staff-level backend engineer</strong> based in Gurugram, India, with 8+ years spent architecting cloud-native, multi-tenant SaaS platforms on AWS. Most of that time has been at <strong>Thoughts2Binary</strong>, where I went from writing my first Django APIs to owning architecture across a portfolio of B2B products.</p>
+        <p>My day-to-day lives at the intersection of <strong>platform engineering</strong> and <strong>distributed systems</strong> — internal developer platforms, event-driven microservices, RBAC and auth, and infra that scales without scaling the AWS bill alongside it.</p>
+        <p>Outside of work hours, I ship small, sharp tools: <strong>Notifex</strong> is my current side build — a fan-out notification service in Go — and <strong>DevsToolkit</strong> is a suite of privacy-first dev utilities I built and actually use.</p>
+      </div>
+      <div class="fetch">
+        <div class="fetch-row"><span class="k">role</span><span class="v">Vertical Lead / Staff Engineer</span></div>
+        <div class="fetch-row"><span class="k">company</span><span class="v">Thoughts2Binary</span></div>
+        <div class="fetch-row"><span class="k">experience</span><span class="v">8+ years</span></div>
+        <div class="fetch-row"><span class="k">infra_cost</span><span class="v mint">-66%</span></div>
+        <div class="fetch-row"><span class="k">cicd_cost</span><span class="v mint">-80%</span></div>
+        <div class="fetch-row"><span class="k">users_served</span><span class="v">20,000+</span></div>
+        <div class="fetch-row"><span class="k">deployments</span><span class="v">12 customer envs</span></div>
+        <div class="fetch-row"><span class="k">mentoring</span><span class="v">5+ engineers</span></div>
+        <div class="fetch-row"><span class="k">status</span><span class="v mint">● currently shipping</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-tag">02</span><span class="sec-title">git log <span class="accent">--author=shobhit</span></span></div>
+    <div class="commits" id="commits"></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-tag">03</span><span class="sec-title">ls <span class="accent">./projects</span></span></div>
+    <div class="repo-grid" id="repoGrid"></div>
+
+    <div style="height:20px;"></div>
+
+    <div class="callout">
+      <div>
+        <h3>🧰 DevsToolkit</h3>
+        <p>15 essential dev utilities — JSON formatter, JWT decoder, hash generator, regex tester and more. 100% client-side, no data leaves your browser, free forever.</p>
+      </div>
+      <a class="btn primary" href="https://devstoolkit.link" target="_blank" rel="noopener">open devstoolkit.link →</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-tag">04</span><span class="sec-title">grep -r <span class="accent">skills/</span></span></div>
+    <div class="skill-group">
+      <div class="skill-label">Languages</div>
+      <div class="pill-row" id="skillsLang"></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Frameworks</div>
+      <div class="pill-row" id="skillsFw"></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Cloud &amp; Infra</div>
+      <div class="pill-row" id="skillsCloud"></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Data &amp; AI</div>
+      <div class="pill-row" id="skillsData"></div>
+    </div>
+  </div>
+</section>
+
+<section id="writing">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-tag">05</span><span class="sec-title">tail -f <span class="accent">writing.log</span></span></div>
+    <div class="ls-header">5 posts · dev.to/ticatwolves</div>
+    <div id="postList"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-tag">06</span><span class="sec-title">./contact <span class="accent">--reach-out</span></span></div>
+    <div class="contact-term">
+      <span style="color:var(--mint)">shobhit@t2b</span><span>:~$ </span><span>echo $STATUS</span><br>
+      <span style="color:var(--muted)">→ open to backend &amp; cloud consulting work, and good conversations about distributed systems.</span>
+      <div class="contact-links">
+        <a href="mailto:sbshobhit00@gmail.com">✉ sbshobhit00@gmail.com</a>
+        <a href="https://www.linkedin.com/in/sbshobhit" target="_blank" rel="noopener">in/sbshobhit</a>
+        <a href="https://github.com/ticatwolves" target="_blank" rel="noopener">github.com/ticatwolves</a>
+        <a href="https://dev.to/ticatwolves" target="_blank" rel="noopener">dev.to/ticatwolves</a>
+        <a href="tel:+918126430715">+91-8126-430-715</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>built with go, coffee &amp; a healthy fear of production incidents · © 2026 shobhit bhatnagar</footer>
+
+<script>
+// ---- typewriter boot ----
+const bootText = "whoami";
+const typedEl = document.getElementById('typedCmd');
+const cursorEl = document.getElementById('cursor');
+const outEl = document.getElementById('termOut');
+let i = 0;
+function typeBoot(){
+  if(i <= bootText.length){
+    typedEl.textContent = bootText.slice(0,i);
+    i++;
+    setTimeout(typeBoot, 90);
+  } else {
+    setTimeout(()=>{
+      cursorEl.style.display='none';
+      outEl.style.display='block';
+    }, 350);
+  }
+}
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  typedEl.textContent = bootText;
+  cursorEl.style.display='none';
+  outEl.style.display='block';
+} else {
+  typeBoot();
+}
+
+// ---- experience: git log ----
+const commits = [
+  {hash:'a1f9c3e', date:'2025', tag:'HEAD', msg:'Exploring AI agents & Rust-Python interop', body:'Prototyped a PyO3-based Rust/Python package for performance-critical paths; wrote a Go Lambda for file operations; deep in agentic AI R&D.'},
+  {hash:'8b2e701', date:'2024', tag:'quality', msg:'Hardened Granite: testing, security, performance', body:['Built an in-house pytest framework to automate API testing','Introduced semantic-release + changelogs for internal packages','Closed security, linting & formatting gaps','Multi-stage, multi-platform Docker images','Built a CDK-based internal package for custom infra plugins']},
+  {hash:'6c4a19d', date:'2023', tag:'platform', msg:'Scaled GraniteStack & optimized delivery', body:['Led GraniteStack as code reviewer through complex feature work','Optimized serverless deploys via CloudFormation','Introduced Terraform for automated AWS stack deployment','Migrated CI from Bitbucket to CodeBuild/CodePipeline, cutting cost','Shipped a standalone Stripe payments module across all tenants']},
+  {hash:'3f7d820', date:'2022', tag:'tooling', msg:'Built shared platform utilities', body:['Designed standalone WebSocket architecture for Rollcall','Extracted common utilities into internal Python packages','Built a NoSQL connector package (MongoDB, DynamoDB, OpenSearch)']},
+  {hash:'e91b204', date:'2021', tag:'scale', msg:'Matured Granite into a real platform', body:['Added SLA support, a rule engine & request sanitization to Granite','Generic export support: CSV, PDF, XLS','Built IoT → MongoDB pipeline for FluidAi','Designed schema for Indigo Finance loan management','Built multi-tenant analytics on Glue + Athena for Angle42']},
+  {hash:'2a5f118', date:'2020', tag:'foundation', msg:'Designed Granite from scratch', body:['Built microservice-based API & event architecture using SQS/SNS','Customized Superset for embedded analytics dashboards',"Recognized as part of Binary — the org's strategic discussion group"]},
+  {hash:'d0e4a77', date:'2019', tag:'lead', msg:'Promoted to Team Lead', body:['Led plugin integrations: QuickBooks Desktop, QuickBooks Online, ADP','Started managing a backend team of 4','Awarded Employee of the Year']},
+  {hash:'7c19f02', date:'2018', tag:'init', msg:'Joined Thoughts2Binary', body:['Shipped APIs in Django REST Framework across early products','Fixed geodistance search bugs using OpenSearch on JoinWheels','Wrote clean-architecture APIs for GoLive']},
+];
+const commitsEl = document.getElementById('commits');
+commitsEl.innerHTML = commits.map((c,idx)=>`
+  <div class="commit ${idx===0?'head':''}">
+    <div class="commit-meta">
+      <span class="commit-hash">${c.hash}</span>
+      <span>${c.date}</span>
+      <span class="commit-tag">${c.tag}</span>
+    </div>
+    <div class="commit-msg">${c.msg}</div>
+    <div class="commit-body">${Array.isArray(c.body) ? '<ul>'+c.body.map(b=>`<li>${b}</li>`).join('')+'</ul>' : c.body}</div>
+  </div>
+`).join('');
+
+// ---- projects ----
+const repos = [
+  {name:'Notifex', badge:'active', desc:'Centralized notification service with fan-out delivery across email, SMS, push, Slack, Teams, webhook & WhatsApp. Go + ent + PostgreSQL + Gin.', lang:'Go', color:'#00ADD8', url:'https://github.com/ticatwolves/Notifex'},
+  {name:'GraniteStack', badge:'production', desc:'Low-code internal developer platform for provisioning multi-tenant SaaS apps — RBAC, workflows, APIs, deployment automation. 12 live customer environments.', lang:'Python', color:'#3572A5', url:'https://www.granitestack.com/'},
+  {name:'Rollcall', badge:'production', desc:'Real-time school transportation SaaS — GPS tracking & live location over WebSockets. 200+ schools, 30,000+ daily active users.', lang:'WebSocket', color:'#f2c14e', url:'https://rollcall.com.au/'},
+  {name:'DevsToolkit', badge:'live', desc:'15 privacy-first developer tools — JSON formatter, JWT decoder, hash generator, regex tester & more. 100% client-side.', lang:'JS/TS', color:'#f7df1e', url:'https://devstoolkit.link/'},
+  {name:'python-mcp-demo', badge:'oss', desc:'Deploying a production-ready MCP server on AWS using Terraform.', lang:'HCL', color:'#844fba', url:'https://github.com/ticatwolves/python-mcp-demo'},
+  {name:'Indigo Finance', badge:'production', desc:'Loan portfolio management platform — automated Annual Loan Review workflows and profitability analytics.', lang:'Python', color:'#3572A5', url:'http://indigofinance.com.au/'},
+];
+document.getElementById('repoGrid').innerHTML = repos.map(r=>`
+  <a class="repo-card" href="${r.url}" target="_blank" rel="noopener">
+    <div class="repo-top">
+      <span class="repo-name">${r.name}</span>
+      <span class="repo-badge">${r.badge}</span>
+    </div>
+    <div class="repo-desc">${r.desc}</div>
+    <div class="repo-foot">
+      <span class="lang"><span class="lang-dot" style="background:${r.color}"></span>${r.lang}</span>
+      <span>view →</span>
+    </div>
+  </a>
+`).join('');
+
+// ---- skills ----
+const skillSets = {
+  skillsLang: ['Python','Go','Rust (PyO3)','JavaScript','TypeScript','SQL','Bash'],
+  skillsFw: ['Django','FastAPI','Gin','Flask','React','Next.js','Pytest'],
+  skillsCloud: ['AWS','Docker','Terraform','ECS','Kubernetes','CloudFormation','AWS CDK','CI/CD'],
+  skillsData: ['PostgreSQL','Redis','DynamoDB','MongoDB','OpenSearch','AWS Bedrock','SageMaker','AI Agents'],
+};
+Object.entries(skillSets).forEach(([id,list])=>{
+  document.getElementById(id).innerHTML = list.map(s=>`<span class="pill">${s}</span>`).join('');
+});
+
+// ---- writing ----
+const posts = [
+  {title:'Understanding Django, Gunicorn, and Database Connections', tags:'#architecture #django #database #performance', date:"Oct 16 '25", url:'https://dev.to/ticatwolves/understanding-django-gunicorn-and-database-connections-5g50'},
+  {title:'Automate Your Go Project: Best Practices & CI/CD with GitHub Actions', tags:'#cicd #go #githubactions', date:"Oct 5 '25", url:'https://dev.to/ticatwolves/automate-your-go-project-best-practices-cicd-with-github-actions-4bo4'},
+  {title:'Building, Testing, and Publishing Go Packages — Best Practices', tags:'#go #packaging #programming', date:"Oct 2 '25", url:'https://dev.to/ticatwolves/building-testing-and-publishing-go-packages-best-practices-8k'},
+  {title:'Shorten URL Service with Go and AWS SAM', tags:'#go #serverless #sam', date:"Sep 28 '25", url:'https://dev.to/ticatwolves/shorten-url-service-with-go-and-aws-sam-24gn'},
+  {title:'GoLang Project Template', tags:'#go #backend #tutorial', date:"Sep 23 '25", url:'https://dev.to/ticatwolves/golang-project-template-4iib'},
+];
+document.getElementById('postList').innerHTML = posts.map(p=>`
+  <a class="post" href="${p.url}" target="_blank" rel="noopener">
+    <div>
+      <div class="post-title">${p.title}</div>
+      <div class="post-tags">${p.tags}</div>
+    </div>
+    <div class="post-date">${p.date}</div>
+  </a>
+`).join('');
+
+// ---- active tab on scroll ----
+const tabs = document.querySelectorAll('.tabs a');
+const sections = [...tabs].map(t=>document.querySelector(t.getAttribute('href')));
+window.addEventListener('scroll', ()=>{
+  let idx = 0;
+  sections.forEach((s,i)=>{ if(s && window.scrollY >= s.offsetTop - 80) idx = i; });
+  tabs.forEach(t=>t.classList.remove('active'));
+  tabs[idx].classList.add('active');
+});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6G9Z9BRE22"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6G9Z9BRE22');
+</script>
+</body>
 </html>
